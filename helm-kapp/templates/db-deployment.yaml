@@ -4,6 +4,7 @@ metadata:
   name: db
   labels:
     app: db
+  namespace: kapp
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -18,10 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "helm-kapp.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        name: db
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -58,19 +56,19 @@ spec:
                   key: POSTGRES_HOST
             - name: POSTGRES_USER
               valueFrom:
-                secretKeyRef:
-                  name: mysecret
-                  key: username
+                configMapKeyRef:
+                  name: db-config
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mysecret
                   key: password
             - name: POSTGRES_URL
-               value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)
+              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)
           ports:
             - name: http
-              containerPort: {{ .Values.db-service.port }}
+              containerPort: {{ .Values.dbservice.port }}
               protocol: TCP
           {{- with .Values.livenessProbe }}
           livenessProbe:

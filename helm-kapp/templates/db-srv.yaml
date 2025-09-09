@@ -4,6 +4,7 @@ metadata:
   name: db
   labels:
     app: db
+  namespace: kapp
 spec:
   type: {{ .Values.dbservice.type }}
   ports:

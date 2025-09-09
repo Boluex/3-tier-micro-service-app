@@ -4,6 +4,7 @@ metadata:
   name: backend
   labels:
     app: backend
+  namespace: kapp
 spec:
   type: {{ .Values.backendservice.type }}
   ports:

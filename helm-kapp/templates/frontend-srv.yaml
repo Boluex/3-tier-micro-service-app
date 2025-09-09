@@ -4,6 +4,7 @@ metadata:
     name: frontend
     labels:
       app: frontend
+    namespace: kapp
 spec:
   type: {{ .Values.frontendservice.type }}
   ports:
