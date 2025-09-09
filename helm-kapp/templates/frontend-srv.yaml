@@ -5,9 +5,9 @@ metadata:
     labels:
       app: frontend
 spec:
-  type: {{ .Values.frontend-service.type }}
+  type: {{ .Values.frontendservice.type }}
   ports:
-    - port: {{ .Values.frontend-service.port }}
+    - port: {{ .Values.frontendservice.port }}
       targetPort: 3000
       protocol: TCP
       name: http

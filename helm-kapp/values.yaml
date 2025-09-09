@@ -6,17 +6,17 @@
 replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
-db-image:
+dbimage:
   repository: postgres
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "15"
-backend-image:
+backendimage:
   repository: kotonium/k8app-backend-image
   pullPolicy: IfNotPresent
   tag: "1.2"
-frontend-image:
+frontendimage:
   repository: kotonium/k8app-frontend-image
   pullPolicy: IfNotPresent
   tag: "1.4"
@@ -56,19 +56,19 @@ securityContext:
     drop: ["ALL"]
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
-db-service:
+dbservice:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 5432
 
 
-backend-service:
+backendservice:
   type: ClusterIP
   port: 8080
 
 
-frontend-service:
+frontendservice:
   type: ClusterIP
   port: 3000
 

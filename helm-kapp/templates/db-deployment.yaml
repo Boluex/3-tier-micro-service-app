@@ -38,8 +38,8 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.db-image.repository }}:{{ .Values.db-image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.db-image.pullPolicy }}
+          image: "{{ .Values.dbimage.repository }}:{{ .Values.dbimage.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.dbimage.pullPolicy }}
           env:
             - name: POSTGRES_DB
               valueFrom:

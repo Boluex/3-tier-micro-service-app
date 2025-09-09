@@ -34,11 +34,11 @@ spec:
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          image: "{{ .Values.backend-image.repository }}:{{ .Values.backend-image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.backend-image.pullPolicy }}
+          image: "{{ .Values.backendimage.repository }}:{{ .Values.backendimage.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.backendimage.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.backend-service.port }}
+              containerPort: {{ .Values.backendservice.port }}
               protocol: TCP
          
         
