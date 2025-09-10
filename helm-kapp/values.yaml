@@ -49,13 +49,13 @@ podSecurityContext: {}
   # fsGroup: 2000
 
 
-securityContext:
-  runAsNonRoot: true
-  runAsUser: 999    # postgres user inside the official image
-  readOnlyRootFilesystem: false
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop: ["ALL"]
+securityContext: {}
+  # runAsNonRoot: true
+  # runAsUser: 999    # postgres user inside the official image
+  # readOnlyRootFilesystem: false
+  # allowPrivilegeEscalation: false
+  # capabilities:
+  #   drop: ["ALL"]
 
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
@@ -154,7 +154,7 @@ volumes:
 volumeMounts: 
 - name: postgres-storage
   mountPath: /var/lib/postgresql/data
-  readOnly: true
+  readOnly: false
 
 nodeSelector: {}
 

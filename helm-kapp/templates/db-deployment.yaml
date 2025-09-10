@@ -39,6 +39,8 @@ spec:
           image: "{{ .Values.dbimage.repository }}:{{ .Values.dbimage.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.dbimage.pullPolicy }}
           env:
+            - name: PROJECT_NAME
+              value: "K8sApp"
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
@@ -64,7 +66,7 @@ spec:
                 secretKeyRef:
                   name: mysecret
                   key: password
-            - name: POSTGRES_URL
+            - name: SQLALCHEMY_DATABASE_URI
               value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)
           ports:
             - name: http
