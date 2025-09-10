@@ -34,6 +34,36 @@ spec:
           {{- end }}
           image: "{{ .Values.backendimage.repository }}:{{ .Values.backendimage.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.backendimage.pullPolicy }}
+          env:
+            - name: PROJECT_NAME
+              value: "K8sApp"
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: POSTGRES_DB
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: POSTGRES_PORT
+            - name: POSTGRES_SERVER   # 👈 instead of HOST, your code probably expects SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: POSTGRES_HOST
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: password
+            - name: SQLALCHEMY_DATABASE_URI
+              value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_SERVER):$(POSTGRES_PORT)/$(POSTGRES_DB)"
           ports:
             - name: http
               containerPort: {{ .Values.backendservice.port }}
